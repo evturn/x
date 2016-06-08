@@ -6,46 +6,23 @@ import {
   AsyncStorage,
 } from 'react-native'
 
-import { Provider } from 'react-redux'
+import { connect } from 'react-redux'
 
 import Input from '../components/Input'
 import Button from '../components/Button'
-import Record from './Record'
+import RecordMap from './RecordMap'
 
 const STORAGE_KEY = '@XTest:messages'
 
-const records = [
-  {
-    value: `I'm rolling on the top`,
-    id: '1a'
-  },{
-    value: `I'm a record`,
-    id: `1a-1`,
-    parent: '1a'
-  },{
-    value: `I'm also a record`,
-    id: `1a-2`,
-    parent: '1a'
-  },{
-    value: `Yes I am a record`,
-    id: `1a-3`,
-    parent: '1a'
-  },{
-    value: `I'm rolling on the top also!`,
-    id: '1b'
-  }
-]
-
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       latest: 'Hi.',
       messages: [],
-      alert: '',
-      records: records
+      alert: ''
     }
   }
 
@@ -106,21 +83,21 @@ class App extends Component {
     this.setState({ alert: message })
   }
 
-  renderRecords(records) {
+  renderRecordMap(records) {
     return records
       .filter(x => x.parent === undefined)
-      .map(parent => {
-        children = this.state.records.filter(record => record.parent === parent.id)
-        return (
-          <Record
-            key={parent.id}
-            value={parent.value}
-            id={parent.id}>
-            {children.map(x => <Record key={x.id}{...x} />)}
-          </Record>
-        )
+      .map(x => {
+        x.records = this.props.record.filter(rec => rec.parent === x.id)
+        return x
       })
-
+      .map((x, i) => (
+        <RecordMap
+          key={i}
+          value={x.value}
+          id={x.id}
+          records={x.records}
+        />
+      ))
   }
 
   render() {
@@ -132,7 +109,7 @@ class App extends Component {
         <Input />
         <Text>{this.state.alert}</Text>
         <Button>Press Down</Button>
-        {this.renderRecords(this.state.records)}
+        {this.renderRecordMap(this.props.record)}
         {this.state.messages.map(x => <Text key={x}>{x}</Text>)}
       </View>
 
@@ -155,4 +132,6 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App
+export default connect(
+  ({ record }) => ({ record })
+)(App)
