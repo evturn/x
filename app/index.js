@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   AsyncStorage,
-  TextInput,
-  TouchableOpacity
 } from 'react-native'
+
+
+import Input from './components/Input'
+import Button from './components/Button'
 
 const STORAGE_KEY = '@XTest:messages'
 
@@ -46,7 +47,7 @@ class X extends Component {
 
   async submitText(latest) {
     const messages = this.state.messages.concat(latest)
-    this['🍟'].clear()
+
     this.setState({
       latest,
       messages
@@ -58,7 +59,7 @@ class X extends Component {
       this.appendAlert('AsyncStorage error: ' + error.message);
     }
 
-    this['🍟'].focus()
+
   }
 
   async removeStorage() {
@@ -84,20 +85,9 @@ class X extends Component {
       <View style={styles.root}>
         <Text style={styles.header}>X</Text>
         <Text style={styles.header}>{this.state.latest}</Text>
-        <TextInput
-          ref={x => this['🍟'] = x}
-          style={styles.input}
-          autoCorrect={false}
-          onSubmitEditing={e => this.submitText(e.nativeEvent.text)}
-        />
+        <Input />
         <Text>{this.state.alert}</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          activeOpacity={1}
-          onPress={_ => this.removeStorage()}
-          >
-          <Text style={styles.btnText}>Erase All</Text>
-        </TouchableOpacity>
+        <Button>Press Down</Button>
         {this.state.messages.map(x => <Text key={x}>{x}</Text>)}
       </View>
     )
@@ -116,28 +106,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
     fontFamily: 'helveticaneue-thin'
-  },
-  input: {
-    height: 40,
-    backgroundColor: '#efefef',
-    textAlign: 'center',
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 10,
-    fontFamily: 'helveticaneue-thin'
-  },
-  btn: {
-    alignItems: 'center',
-    padding: 10,
-    margin: 10,
-    backgroundColor: '#010101',
-    borderRadius: 1
-  },
-  btnText: {
-    fontFamily: 'helveticaneue-thin',
-    color: '#ffffff'
   }
 })
-
 
 export default X
