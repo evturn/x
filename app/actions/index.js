@@ -1,19 +1,18 @@
-function createInitialState(data) {
-  const topLevelRecords = data.filter(x => x.parent === undefined)
-  const getImmediateChildren = parent => data.filter(x => x.parent === parent.id)
+import * as Rx from 'rxjs'
 
-  function buildRecordMap(records) {
-    return records.map(x => {
-      x.records = getImmediateChildren(x)
-      if (x.records.length > 0) {
-        buildRecordMap(x.records)
-      }
+export const SET_RECORD_TO_EDITING = 'SET_RECORD_TO_EDITING'
 
-      return x
-    })
-  }
+const setRecordToEditing = id => (
+  (actions, store) => (
+    Rx.Observable.of(store.getState().collection)
+      .map(x => x.map(x => {
+        x.editing = id === x.id ? !x.editing : false
+        return x
+      }))
+      .map(payload => ({ type: SET_RECORD_TO_EDITING, payload }))
+  )
+)
 
-  return buildRecordMap(topLevelRecords)
+export {
+  setRecordToEditing
 }
-
-export default createInitialState

@@ -1,29 +1,21 @@
 import { combineReducers } from 'redux'
+import {
+  SET_RECORD_TO_EDITING
+} from '../actions'
 
-const record = (state=[], action) => {
+const collection = (state=[], action) => {
   switch (action.type) {
+    case SET_RECORD_TO_EDITING:
+      return action.payload
     default:
       return state
   }
 }
 
 const createReducer = _ => (
-  combineReducers({ record })
-)
-
-const thunkmasterFlex = ({ dispatch, getState }) => (
-  next => (
-    action => {
-      if (typeof action === 'function') {
-        return action(dispatch, getState)
-      }
-
-      return next(action)
-    }
-  )
+  combineReducers({ collection })
 )
 
 export {
-  createReducer,
-  thunkmasterFlex
+  createReducer
 }

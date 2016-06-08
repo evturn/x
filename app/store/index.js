@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import { createReducer, thunkmasterFlex } from '../reducers'
+import { createReducer } from '../reducers'
+import { reduxObservable } from 'redux-observable'
 
 const configureStore = initialState => {
   const middlewares = [
-    thunkmasterFlex
+    reduxObservable()
   ]
 
   const enhancers = [

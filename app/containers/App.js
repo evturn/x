@@ -8,12 +8,9 @@ import {
 
 import { connect } from 'react-redux'
 
-import Input from '../components/Input'
-import Button from '../components/Button'
 import RecordMap from './RecordMap'
 
 const STORAGE_KEY = '@XTest:messages'
-
 
 class App extends Component {
   constructor(props) {
@@ -81,33 +78,11 @@ class App extends Component {
     this.setState({ alert: message })
   }
 
-  renderRecordMap(records) {
-    return records
-      .filter(x => x.parent)
-      .map(x => {
-        x.records = records.filter(rec => rec.parent === x.id)
-        return x
-      })
-      .map((x, i) => (
-        <RecordMap
-          key={i}
-          value={x.value}
-          id={x.id}
-          records={x.records}
-        />
-      ))
-  }
-
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.header}>X</Text>
-        <Text style={styles.header}>{this.state.latest}</Text>
-        <Input />
-        <Text>{this.state.alert}</Text>
-        <Button>Press Down</Button>
-        {this.renderRecordMap(this.props.record)}
-        {this.state.messages.map(x => <Text key={x}>{x}</Text>)}
+        <RecordMap />
       </View>
     )
   }
@@ -123,11 +98,11 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     textAlign: 'center',
-    marginBottom: 30,
+    marginTop: 30,
     fontFamily: 'helveticaneue-thin'
   }
 })
 
 export default connect(
-  ({ record }) => ({ record })
+  ({ collection }) => ({ collection })
 )(App)
