@@ -61,8 +61,6 @@ class App extends Component {
     } catch (error) {
       this.appendAlert('AsyncStorage error: ' + error.message);
     }
-
-
   }
 
   async removeStorage() {
@@ -85,9 +83,9 @@ class App extends Component {
 
   renderRecordMap(records) {
     return records
-      .filter(x => x.parent === undefined)
+      .filter(x => x.parent)
       .map(x => {
-        x.records = this.props.record.filter(rec => rec.parent === x.id)
+        x.records = records.filter(rec => rec.parent === x.id)
         return x
       })
       .map((x, i) => (
@@ -102,7 +100,6 @@ class App extends Component {
 
   render() {
     return (
-
       <View style={styles.root}>
         <Text style={styles.header}>X</Text>
         <Text style={styles.header}>{this.state.latest}</Text>
@@ -112,7 +109,6 @@ class App extends Component {
         {this.renderRecordMap(this.props.record)}
         {this.state.messages.map(x => <Text key={x}>{x}</Text>)}
       </View>
-
     )
   }
 }

@@ -6,39 +6,41 @@ import App from './containers/App'
 
 const data = [
     {
-      value: `1a`,
-      id: '1a'
-    },{
-      value: `1a-1`,
-      id: `1a-1`,
+      value: `Here is something`,
+      id: `1a-2a`,
       parent: '1a'
     },{
-      value: `1a-2`,
-      id: `1a-2`,
+      value: `I wrote this down`,
+      id: `1a-2b-3a`,
+      parent: '1a-2b'
+    },{
+      value: `Quick little thing`,
+      id: `1a-2b`,
       parent: '1a'
     },{
-      value: `1a-3`,
-      id: `1a-3`,
+      value: `RecordMap`,
+      id: '1a',
+      parent: false
+    },{
+      value: `My face is 😶`,
+      id: `1a-2c`,
       parent: '1a'
     },{
-      value: `1b`,
-      id: '1b'
-    },{
-      value: `1b-1`,
-      id: `1b-2`,
+      value: `Ideas`,
+      id: `1b-2a`,
       parent: '1b'
     },{
-      value: `1b-2`,
-      id: `1b-2`,
+      value: `Things I gotta do`,
+      id: `1b-2b-3a`,
+      parent: '1b-2b'
+    },{
+      value: `RecordMap`,
+      id: '1b',
+      parent: false
+    },{
+      value: `Eat food`,
+      id: `1b-2b`,
       parent: '1b'
-    },{
-      value: `2b`,
-      id: `2b`,
-      parent: '1b-2'
-    },{
-      value: `2b-1`,
-      id: `2b-1`,
-      parent: '2b'
     }
   ]
 

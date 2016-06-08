@@ -12,7 +12,8 @@ class RecordMap extends Component {
   renderRecords(records) {
     return records ? (
       records.map((x, i) => {
-        x.records = this.props.record.filter(rec => rec.parent === x.id)
+        x.records = this.props.record
+          .filter(rec => rec.parent === x.id)
         return x
       })
       .map((x, i) => (
@@ -27,14 +28,26 @@ class RecordMap extends Component {
 
   render() {
     return(
-      <Record
-        value={this.props.value}
-        id={this.props.id}>
-        {this.renderRecords(this.props.records)}
-      </Record>
+      <View style={styles.root}>
+        <Record
+          value={this.props.value}
+          id={this.props.id}>
+          {this.renderRecords(this.props.records)}
+        </Record>
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  }
+})
 
 export default connect(
   ({ record }) => ({ record })
