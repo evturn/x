@@ -16,11 +16,6 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      latest: 'Hi.',
-      messages: [],
-      alert: ''
-    }
   }
 
   componentDidMount() {
@@ -31,11 +26,8 @@ class App extends Component {
     try {
       const value = await AsyncStorage.getItem(STORAGE_KEY)
       if (value !== null){
-        const messages = JSON.parse(value)
-        this.setState({
-          latest: messages[0],
-          messages
-        })
+
+        this.setState(JSON.parse(value))
         this.appendAlert('Recovered selection from disk: ' + value.length)
       } else {
         this.appendAlert('Initialized with no selection on disk.')
@@ -45,27 +37,16 @@ class App extends Component {
     }
   }
 
-  async submitText(latest) {
-    const messages = this.state.messages.concat(latest)
-
-    this.setState({
-      latest,
-      messages
-    })
+  async saveCollection(data) {
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
-      this.appendAlert('Saved selection to disk: ' + latest);
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      this.appendAlert('Saved selection to disk: ');
     } catch (error) {
       this.appendAlert('AsyncStorage error: ' + error.message);
     }
   }
 
   async removeStorage() {
-    this.setState({
-      latest: 'Hi.',
-      messages: [],
-      alert: ''
-    })
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
       this.appendAlert('Selection removed from disk.');
@@ -79,12 +60,12 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.root}>
-        <Text style={styles.header}>X</Text>
-        <RecordMap />
-      </View>
-    )
+    const yes = this.props
+    const yeah = this.state
+    console.log(yes)
+    console.log('=========')
+    console.log(yeah)
+    return <RecordMap />
   }
 }
 
@@ -94,12 +75,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
-  },
-  header: {
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: 30,
-    fontFamily: 'helveticaneue-thin'
   }
 })
 
