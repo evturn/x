@@ -1,51 +1,141 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import configureStore from './store'
+import { Animated, Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { BlurView } from 'expo'
 
-import App from './containers/App'
+const AnimatedText = Animated.createAnimatedComponent(Text)
 
-const collection = [
-  {
-    value: `The note and its info`,
-    editing: false,
-    id: 1,
-    setID: false,
-    type: 'Record',
-    set: []
-  },{
-    value: `A second note`,
-    editing: false,
-    id: 2,
-    setID: false,
-    type: 'Record',
-    set: []
-  },{
-    value: `The newest note ever.`,
-    editing: false,
-    id: 3,
-    setID: 1,
-    type: 'Record',
-    set: []
-  },{
-    value: `I am here.`,
-    editing: false,
-    id: 4,
-    setID: 1,
-    type: 'Record',
-    set: []
+class Accessor extends Component {
+  state = {
+    opacity: new Animated.Value(0),
   }
-]
 
-const store = configureStore({ collection })
+  componentDidMount() {
+    this.animate()
+  }
 
-class X extends Component {
+  animate = () => {
+    const { opacity } = this.state
+    Animated.timing(opacity, {
+      duration: 2500,
+      toValue: 1
+    })
+    .start(() => {
+      Animated.timing(opacity, {
+        duration: 2500,
+        toValue: 0
+      })
+      .start(this.animate)
+    })
+  }
+
   render() {
     return (
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <View style={{flex: 1}}>
+      <StatusBar barStyle="light-content" />
+        <BlurView
+          tint="light"
+          intensity={50}
+          style={[StyleSheet.absoluteFill, styles.blur]}>
+          <Image style={styles.image} source={uri} />
+        </BlurView>
+        <View style={styles.container}>
+          <View style={styles.inner}>
+            <View style={styles.header}>
+              <AnimatedText style={[styles.headerText, {opacity: this.state.opacity}]}>Accessor</AnimatedText>
+            </View>
+            <View style={styles.card}>
+              <StupidButton title="Sup" />
+              <StupidButton title="dog" />
+              <StupidButton title="how" />
+              <StupidButton title="are" />
+              <StupidButton title="you" />
+              <StupidButton title="doing" />
+            </View>
+          </View>
+        </View>
+      </View>
     )
   }
 }
 
-export default X
+const uri = require('./static/logo.png')
+
+const StupidButton = ({ title }) => {
+  return (
+    <View style={styles.button}>
+      <Button
+        onPress={e => console.log(`I'm a press event.`)}
+        color="#fff"
+        title={title} />
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#06abfc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  blur: {
+    zIndex: 9,
+    height: 65
+  },
+  image: {
+    marginTop: 15,
+    alignSelf: 'center',
+    width: 40,
+    height: 40
+  },
+  inner: {
+    position: 'absolute',
+    top: 200,
+    right: 15,
+    left: 15,
+    maxWidth: 400,
+    height: 200,
+    zIndex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    padding: 16,
+    margin: 0,
+    backgroundColor: '#06abfc',
+  },
+  headerText: {
+    color: '#fff',
+    alignItems: 'flex-end',
+    fontSize: 24,
+    fontWeight: '300',
+    overflow: 'hidden',
+  },
+  button: {
+    backgroundColor: '#06abfc',
+    height: 40,
+    width: 70,
+    justifyContent: 'center',
+    borderRadius: 2,
+    margin: 5,
+  },
+  card: {
+    padding: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  message: {
+    position: 'absolute',
+    bottom: -90,
+    right: 35,
+    left: 35,
+    textAlign: 'center',
+    color: '#039be6',
+    fontSize: 14,
+    lineHeight: 16,
+    fontWeight: '200',
+  },
+})
+
+export default Accessor

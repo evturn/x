@@ -1,17 +1,26 @@
 {
-  "name": "X",
-  "version": "0.0.1",
+  "name": "accessor",
+  "version": "0.1.0",
   "private": true,
+  "devDependencies": {
+    "react-native-scripts": "0.0.26",
+    "jest-expo": "^0.3.0",
+    "react-test-renderer": "~15.4.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
+  "jest": {
+    "preset": "jest-expo"
   },
   "dependencies": {
-    "node-uuid": "^1.4.7",
-    "react": "^15.1.0",
-    "react-native": "^0.27.1",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "redux-observable": "^0.6.0",
-    "rxjs": "^5.0.0-beta.8"
+    "expo": "^15.1.0",
+    "react": "~15.4.0",
+    "react-native": "0.42.3"
   }
 }
