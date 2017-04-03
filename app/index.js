@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Animated, Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Animated, Button, Image, Linking, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { BlurView } from 'expo'
+import Cards from './screens/Cards'
 
 const AnimatedText = Animated.createAnimatedComponent(Text)
 
@@ -11,6 +12,7 @@ class Accessor extends Component {
 
   componentDidMount() {
     this.animate()
+
   }
 
   animate = () => {
@@ -32,26 +34,11 @@ class Accessor extends Component {
     return (
       <View style={{flex: 1}}>
       <StatusBar barStyle="light-content" />
-        <BlurView
-          tint="light"
-          intensity={50}
-          style={[StyleSheet.absoluteFill, styles.blur]}>
+        <View style={[StyleSheet.absoluteFill, styles.header]}>
           <Image style={styles.image} source={uri} />
-        </BlurView>
+        </View>
         <View style={styles.container}>
-          <View style={styles.inner}>
-            <View style={styles.header}>
-              <AnimatedText style={[styles.headerText, {opacity: this.state.opacity}]}>Accessor</AnimatedText>
-            </View>
-            <View style={styles.card}>
-              <StupidButton title="Sup" />
-              <StupidButton title="dog" />
-              <StupidButton title="how" />
-              <StupidButton title="are" />
-              <StupidButton title="you" />
-              <StupidButton title="doing" />
-            </View>
-          </View>
+          <Cards />
         </View>
       </View>
     )
@@ -60,70 +47,23 @@ class Accessor extends Component {
 
 const uri = require('./static/logo.png')
 
-const StupidButton = ({ title }) => {
-  return (
-    <View style={styles.button}>
-      <Button
-        onPress={e => console.log(`I'm a press event.`)}
-        color="#fff"
-        title={title} />
-    </View>
-  )
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#06abfc',
+
     alignItems: 'center',
     justifyContent: 'center',
   },
-  blur: {
+  header: {
     zIndex: 9,
-    height: 65
+    height: 65,
+    backgroundColor: '#06abfc',
   },
   image: {
     marginTop: 15,
     alignSelf: 'center',
     width: 40,
     height: 40
-  },
-  inner: {
-    position: 'absolute',
-    top: 200,
-    right: 15,
-    left: 15,
-    maxWidth: 400,
-    height: 200,
-    zIndex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    padding: 16,
-    margin: 0,
-    backgroundColor: '#06abfc',
-  },
-  headerText: {
-    color: '#fff',
-    alignItems: 'flex-end',
-    fontSize: 24,
-    fontWeight: '300',
-    overflow: 'hidden',
-  },
-  button: {
-    backgroundColor: '#06abfc',
-    height: 40,
-    width: 70,
-    justifyContent: 'center',
-    borderRadius: 2,
-    margin: 5,
-  },
-  card: {
-    padding: 20,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   message: {
     position: 'absolute',
