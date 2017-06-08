@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    margin: 5,
+    margin: 10,
   },
   itemContent: {
     backgroundColor: "#fff",
     borderRadius: 2,
-    margin: 15,
+    padding: 10,
     shadowColor: "#000000",
     shadowOpacity: 0.3,
     shadowRadius: 1,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   titleText: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '400',
     color: '#1E1F1F',
   },
