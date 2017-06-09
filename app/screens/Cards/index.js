@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import Card from './Card';
 import CardButton from './CardButton'
+
 
 const data = [
   {
@@ -45,83 +47,33 @@ class Cards extends Component {
     })
   }
 
+  renderItem = ({ item, index }) => {
+    return <Card
+      {...item}
+      key={item.key} />
+  }
+
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={styles.root}>
-        {this.state.data.map(({ description, image, key, title }) =>
-          <View
-            key={key}
-            style={styles.item}>
-
-            <View style={styles.itemContent}>
-              <View style={styles.title}>
-                <Text style={styles.titleText}>{title}</Text>
-              </View>
-
-              <View style={styles.description}>
-                <Text
-                  numberOfLines={4}
-                  style={styles.descriptionText}>{description}</Text>
-              </View>
-
-              <Image style={styles.image} source={{uri: image}} />
-            </View>
-          </View>)}
-      </ScrollView>
+      <FlatList
+        contentContainerStyle={styles.root}
+        data={this.state.data}
+        renderItem={this.renderItem}
+        style={styles.list}>
+      </FlatList>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  description: {
-    marginVertical: 10,
-  },
-  descriptionText: {
-    fontSize: 11,
-    fontWeight: '200',
-    lineHeight: 16,
-    textAlign: 'left',
-  },
-  image: {
-    resizeMode: 'cover',
-    height: 125,
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    margin: 10,
-  },
-  itemContent: {
-    backgroundColor: "#fff",
-    borderRadius: 2,
-    padding: 10,
-    shadowColor: "#000000",
-    shadowOpacity: 0.3,
-    shadowRadius: 1,
-    shadowOffset: {
-      height: 1,
-      width: 0.3,
-    },
-  },
   root: {
     flex: 1,
-    top: 75,
     justifyContent: 'flex-start',
-    bottom: 0,
+    minHeight: Dimensions.get('window').height,
+    marginTop: 85,
   },
-  title: {
-    marginVertical: 5,
-  },
-  titleText: {
-    fontSize: 13,
-    fontWeight: '400',
-    color: '#1E1F1F',
+  list: {
+    height: Dimensions.get('window').height,
   },
 });
 
