@@ -55,12 +55,14 @@ class Cards extends Component {
 
   render() {
     return (
-      <FlatList
-        contentContainerStyle={styles.root}
-        data={this.state.data}
-        renderItem={this.renderItem}
-        style={styles.list}>
-      </FlatList>
+      <View style={styles.root}>
+        <FlatList
+          contentContainerStyle={styles.listContainer}
+          data={this.state.data}
+          renderItem={this.renderItem}
+          style={styles.list}>
+        </FlatList>
+      </View>
     )
   }
 }
@@ -68,12 +70,15 @@ class Cards extends Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: 'flex-start',
+    marginTop: 65,
+  },
+  listContainer: {
+    flex: 1,
     minHeight: Dimensions.get('window').height,
-    marginTop: 85,
   },
   list: {
-    height: Dimensions.get('window').height,
+    flex: 1,
+    bottom: 0,
   },
 });
 
