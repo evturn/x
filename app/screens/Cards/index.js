@@ -41,15 +41,17 @@ class Cards extends Component {
     this.setState({data: this.props.data})
   }
 
-  removeItem = key => {
-    return _ => this.setState({
-      data: this.state.data.filter(x => x.key !== key)
+  removeItem = id => {
+    this.setState({
+      data: this.state.data.filter(x => x.key !== id)
     })
   }
 
   renderItem = ({ item, index }) => {
     return <Card
       {...item}
+      removeItem={this.removeItem}
+      id={item.key}
       key={item.key} />
   }
 
