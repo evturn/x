@@ -19,8 +19,10 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "create-react-native-app": "^1.0.0",
     "expo": "17.x.x",
     "react": "16.0.0-alpha.6",
-    "react-native": "0.44.x"
+    "react-native": "0.44.x",
+    "reactotron-react-native": "^1.12.2"
   }
 }
